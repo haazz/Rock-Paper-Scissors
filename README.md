@@ -12,3 +12,8 @@ Rock-Paper-Scissors game on console with prompt
 
 ## Psudocode
 <img src="./img/pseudocode.png">
+
+## Screen shot
+<img src="./img/prompt.png">
+<img src="./img/playOnConsole.png">
+
