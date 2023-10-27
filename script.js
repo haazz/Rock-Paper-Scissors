@@ -1,89 +1,82 @@
-function chcekInput(playerInput) {
-	if (typeof playerInput !== 'string') {
-		return null;
-	}
-	
-	let str = playerInput.charAt(0).toUpperCase() + playerInput.slice(1).toLowerCase();
-	if (str === "Rock" || str ==="Scissors" || str === "Paper") {
-		return str;
-	}
-	return null;
-}
+let round = 1;
+let playerScore = 0;
+let computerScore = 0;
+
+const buttons = document.querySelectorAll('button');
+const display = document.querySelector('.display');
+const roundBoard = document.createElement('div');
+const scoreBoard = document.createElement('div');
+const resultBoard = document.createElement('div');
+
+roundBoard.textContent = 'Round ' + round;
+scoreBoard.textContent = 'Player: ' + playerScore + ' VS ' + 'Computer: ' + computerScore;
+display.appendChild(roundBoard);
+display.appendChild(scoreBoard);
+display.appendChild(resultBoard);
+
+buttons.forEach((button) => {
+	button.addEventListener('click', () => {
+		playRound(button.className);
+		round++;
+		roundBoard.textContent = 'Round ' + round;
+		scoreBoard.textContent = 'Player: ' + playerScore + ' VS ' + 'Computer: ' + computerScore;
+		checkGameScore();
+	});
+});
 
 function getComputerChoice() {
 	rand = Math.floor(Math.random() * 3);
 	if (rand == 0) {
-		return "Rock";
+		return "rock";
 	}
 	else if (rand == 1) {
-		return "Paper"
+		return "paper"
 	}
 	else {
-		return "Scissors"
+		return "scissors"
 	}
 }
 
-function playRound() {
+function playRound(playerSelection) {
 	let computerSelection = getComputerChoice();
-	let playerSelection = prompt("Enter Rock, Scissors or Paper");
+	let result;
 
-	playerSelection = chcekInput(playerSelection);
-	if (playerSelection === null) {
-		return null;
-	}
 	if (playerSelection === computerSelection) {
-		console.log("Draw! " + playerSelection + " and " + computerSelection + " tied.");
-		return 0;
+		result = "Draw! " + playerSelection + " and " + computerSelection + " tied.";
 	}
-	else if ((playerSelection === "Rock" && computerSelection === "Scissors") ||
-		(playerSelection === "Paper" && computerSelection === "Rock") ||
-		(playerSelection === "Scissors" && computerSelection === "Paper")) {
-		console.log("You win! " + playerSelection + " beats " + computerSelection);
-		return 1;
+	else if ((playerSelection === "rock" && computerSelection === "scissors") ||
+		(playerSelection === "paper" && computerSelection === "rock") ||
+		(playerSelection === "scissors" && computerSelection === "paper")) {
+		result = "You win! " + playerSelection + " beats " + computerSelection;
+		playerScore++;
 	}	
 	else {
-		console.log("You lose! " + computerSelection + " beats " + playerSelection);
-		return 2;
+		result = "You lose! " + computerSelection + " beats " + playerSelection;
+		computerScore++;
 	}
+	resultBoard.textContent = result;
+	console.log(result);
 }
 
-function game(numOfRounds) {
+function checkGameScore() {
 	let result;
-	let playerScore = 0;
-	let computerScore = 0;
-
-	for(let i = 0; i < numOfRounds; i++) {
-		result = playRound();
-		if (result === null) {
-			console.log("It is wrong answer.\n Please enter Rock, Paper, or Scissors.\n");
-			i--;
-			continue;
+	
+	if (computerScore >= 5 || playerScore >= 5) {
+		if (playerScore > computerScore) {
+			console.log("\nCongraturation!\nYou win this game!!!\n");
 		}
-		else if (result === 1) {
-			playerScore++;
+		else if (playerScore === computerScore) {
+			console.log("\nYou play well.\nThe computer was a hard game too.\n");
 		}
-		else if (result === 2) {
-			computerScore++;
+		else {
+			console.log("\nYou lose.\nTry again! (Refresh the website.)\n");
 		}
-		console.log("\nSCORE\nPlayer: " + playerScore + " VS Computer: " + computerScore + "\n");
+		playerScore = 0;
+		computerScore = 0;
+		round = 1;
+		resultBoard.textContent = '';
 	}
-	if (playerScore > computerScore) {
-		console.log("\nCongraturation!\nYou win this game!!!\n");
-	}
-	else if (playerScore === computerScore) {
-		console.log("\nYou play well.\nThe computer was a hard game too.\n");
-	}
-	else {
-		console.log("\nYou lose.\nTry again! (Refresh the website.)\n");
-	}
+	
+	
 }
 
-let numOfRounds = parseInt(prompt("Enter number of rounds to play (1~10)"));
-
-if (numOfRounds >= 1 && numOfRounds <= 10) {
-	console.log("Play " + numOfRounds + " rounds!\n")
-	game(numOfRounds);
-}
-else {
-	console.log("Wrong answer. \nIf you want to try again, refresh the website\n");
-}
