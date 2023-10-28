@@ -5,6 +5,7 @@ Rock-Paper-Scissors game on console with prompt
 
 ## Skills
 - HTML
+- CSS
 - JavaScripts
 
 ## Plan
@@ -14,6 +15,11 @@ Rock-Paper-Scissors game on console with prompt
 <img src="./img/pseudocode.png">
 
 ## Screen shot
+### Original
 <img src="./img/prompt.png">
 <img src="./img/playOnConsole.png">
 
+### Update UI
+<img src="./img/mainPage.png">
+<img src="./img/drawGame.png">
+<img src="./img/finalResult.png">
