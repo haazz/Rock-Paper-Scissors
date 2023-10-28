@@ -4,12 +4,14 @@ let computerScore = 0;
 
 const buttons = document.querySelectorAll('button');
 const display = document.querySelector('.display');
-const roundBoard = document.createElement('div');
-const scoreBoard = document.createElement('div');
-const resultBoard = document.createElement('div');
+const roundBoard = document.createElement('p');
+const scoreBoard = document.createElement('p');
+const resultBoard = document.createElement('p');
 
 roundBoard.textContent = 'Round ' + round;
+roundBoard.className = 'roundBoard';
 scoreBoard.textContent = 'Player: ' + playerScore + ' VS ' + 'Computer: ' + computerScore;
+scoreBoard.className = 'scoreBoard';
 display.appendChild(roundBoard);
 display.appendChild(scoreBoard);
 display.appendChild(resultBoard);
@@ -43,15 +45,18 @@ function playRound(playerSelection) {
 
 	if (playerSelection === computerSelection) {
 		result = "Draw! " + playerSelection + " and " + computerSelection + " tied.";
+		resultBoard.style.color = 'green';
 	}
 	else if ((playerSelection === "rock" && computerSelection === "scissors") ||
 		(playerSelection === "paper" && computerSelection === "rock") ||
 		(playerSelection === "scissors" && computerSelection === "paper")) {
 		result = "You win! " + playerSelection + " beats " + computerSelection;
+		resultBoard.style.color = 'blue';
 		playerScore++;
 	}	
 	else {
 		result = "You lose! " + computerSelection + " beats " + playerSelection;
+		resultBoard.style.color = 'red';
 		computerScore++;
 	}
 	resultBoard.textContent = result;
@@ -59,24 +64,24 @@ function playRound(playerSelection) {
 }
 
 function checkGameScore() {
-	let result;
+	let finalResult;
 	
 	if (computerScore >= 5 || playerScore >= 5) {
 		if (playerScore > computerScore) {
-			console.log("\nCongraturation!\nYou win this game!!!\n");
+			finalResult = "\nCongraturation!\nYou win this game!!!\n";
 		}
 		else if (playerScore === computerScore) {
-			console.log("\nYou play well.\nThe computer was a hard game too.\n");
+			finalResult = "\nDraw!\nThe computer was a hard game too.\nTry again!\n";
 		}
 		else {
-			console.log("\nYou lose.\nTry again! (Refresh the website.)\n");
+			finalResult = "\nYou lose.\nTry again!\n";
 		}
+		alert(finalResult);
+		console.log(finalResult);
 		playerScore = 0;
 		computerScore = 0;
 		round = 1;
 		resultBoard.textContent = '';
 	}
-	
-	
 }
 
